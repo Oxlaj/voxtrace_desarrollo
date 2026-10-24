@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | VoxTrace{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{{ url_for('static', path='/css/dashboard.css') }}">{% endblock %}
+{% block content %}
+<header class="page-header"><div><p class="eyebrow">Panel principal</p><h1>Bienvenido, {{ current_user.nombre }}</h1></div></header>
+<section class="dashboard-actions-section"><h2>Accesos disponibles</h2><div class="card-grid dashboard-actions">
+  <a class="action-card" href="/app/personas"><span class="card-icon">PR</span><h3>Personas registradas</h3></a>
+  {% if current_user.rol.nombre in ['Administrador', 'Investigador'] %}<a class="action-card" href="/app/personas/nueva"><span class="card-icon">+</span><h3>Registrar persona</h3></a>{% endif %}
+  <a class="action-card" href="/app/analizar"><span class="card-icon">1:N</span><h3>Analizar audio</h3></a>
+  <a class="action-card" href="/app/historial"><span class="card-icon">H</span><h3>Historial</h3></a>
+</div></section>
+<section aria-labelledby="dashboard-summary-title">
+  <div class="dashboard-section-heading"><h2 id="dashboard-summary-title">Resumen operativo</h2><p id="dashboard-updated" class="muted" aria-live="polite"></p></div>
+  <div id="dashboard-message" class="message" role="status" aria-live="polite">Cargando estadísticas…</div>
+  <div id="dashboard-stats" hidden>
+    <div class="summary-grid">
+      <article class="summary-card"><span>Análisis</span><strong id="summary-analyses">0</strong><small id="summary-scope"></small></article>
+      <article class="summary-card"><span>Personas registradas</span><strong id="summary-people">0</strong></article>
+      <article class="summary-card"><span>Muestras disponibles</span><strong id="summary-samples">0</strong></article>
+    </div>
+    <div class="dashboard-chart-grid">
+      <article class="chart-card"><h3>Análisis en los últimos 7 días</h3><div id="daily-chart" class="daily-chart" aria-label="Análisis realizados por día"></div><p id="daily-empty" class="chart-empty" hidden>No existen análisis en este periodo.</p></article>
+      <article class="chart-card"><h3>Resultados de análisis</h3><div class="outcome-layout"><div id="outcome-chart" class="outcome-chart" role="img" aria-label="Distribución de resultados"></div><ul id="outcome-legend" class="chart-legend"></ul></div><p id="outcome-empty" class="chart-empty" hidden>No existen resultados disponibles.</p></article>
+      <article class="chart-card inventory-card"><h3>Personas y muestras disponibles</h3><div id="inventory-chart" class="inventory-chart"></div><p id="inventory-empty" class="chart-empty" hidden>No existen personas ni muestras registradas.</p></article>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='/js/dashboard.js') }}"></script>{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Detalle de análisis | VoxTrace{% endblock %}
+{% block content %}
+<header class="page-header"><div><h1>Detalle del análisis</h1><p class="muted">Resultado almacenado y candidatos disponibles.</p></div><a class="button button-ghost-light" href="/app/historial">Volver al historial</a></header>
+<div id="detail-message" class="message" role="status" aria-live="polite"></div>
+<section id="analysis-general" class="panel" hidden><div class="result-heading"><h2 id="detail-id"></h2><div><button id="view-report" class="button button-secondary" type="button">Ver reporte</button> <a id="download-pdf" class="button button-primary" href="#">Descargar PDF</a></div></div><dl class="detail-grid"><div><dt>Fecha</dt><dd id="detail-date"></dd></div><div><dt>Usuario responsable</dt><dd id="detail-user"></dd></div><div><dt>Archivo</dt><dd id="detail-file"></dd></div><div><dt>Formato</dt><dd id="detail-format"></dd></div><div><dt>Estado</dt><dd id="detail-state"></dd></div></dl><h2>Posibles coincidencias</h2><div id="detail-candidates" class="candidate-grid"></div><p id="detail-empty" class="empty-state" hidden>No existen candidatos almacenados para este análisis.</p>{% include "reutilizar_audio.html" %}</section>
+<section id="structured-report" class="panel" hidden><h2>Reporte estructurado</h2><div id="report-content"></div></section>
+<div id="detail-context" data-analysis-id="{{ analysis_id }}" hidden></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='/js/historial-detalle.js') }}"></script><script src="{{ url_for('static', path='/js/reutilizar-audio.js') }}"></script>{% endblock %}

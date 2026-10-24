@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Analizar audio | VoxTrace{% endblock %}
+{% block content %}
+<header class="page-header"><div><h1>Analizar audio</h1><p class="muted">Compare un audio de consulta con las voces registradas. VoxTrace proporciona apoyo analítico y sus resultados requieren interpretación profesional.</p></div></header>
+<section class="panel analysis-upload"><h2>Audio de consulta</h2><p class="muted">Formatos admitidos: MP3, OGG, MP4 y WAV.</p><form id="analysis-form"><label for="analysis-file">Seleccionar archivo</label><input id="analysis-file" name="file" type="file" accept=".mp3,.ogg,.mp4,.wav,audio/mpeg,audio/ogg,audio/mp4,video/mp4,audio/wav,audio/x-wav" required><button id="analysis-submit" class="button button-primary" type="submit">Iniciar análisis 1:N</button></form><div id="analysis-status" class="message" role="status" aria-live="polite"></div></section>
+<section id="analysis-results" class="panel" hidden data-analysis-id=""><div class="result-heading"><div><p class="eyebrow">Resultado almacenado</p><h2>Posibles coincidencias</h2></div><div><strong id="analysis-id"></strong> <a id="analysis-detail-link" class="button button-secondary" href="/app/historial">Ver detalle del análisis</a></div></div><div id="candidates" class="candidate-grid"></div><p id="no-candidates" class="empty-state" hidden>No se encontraron candidatos disponibles para comparación con las muestras registradas actualmente.</p>{% include "reutilizar_audio.html" %}</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='/js/analizar.js') }}"></script><script src="{{ url_for('static', path='/js/reutilizar-audio.js') }}"></script>{% endblock %}

@@ -1,0 +1,17 @@
+{% if current_user.rol.nombre in ['Administrador', 'Investigador'] %}
+<section id="reuse-actions" aria-label="Reutilizar audio analizado">
+  <h3>Registrar el audio como muestra de voz</h3>
+  <p>Seleccione y confirme la persona a la que pertenece esta muestra. El resultado del análisis no establece una identidad definitiva.</p>
+  <a id="reuse-new-person" class="button button-primary" href="#">Registrar nueva persona</a>
+  <button id="reuse-existing-person" class="button button-secondary" type="button">Agregar a persona existente</button>
+  <form id="reuse-person-form" hidden>
+    <label for="reuse-person-search">Buscar persona</label>
+    <input id="reuse-person-search" maxlength="100" type="search">
+    <button id="reuse-search" type="button" class="button button-secondary">Buscar</button>
+    <label for="reuse-person-select">Persona registrada</label>
+    <select id="reuse-person-select" required><option value="">Seleccione una persona</option></select>
+    <button class="button button-primary" type="submit">Confirmar asociación del audio</button>
+  </form>
+  <p id="reuse-message" class="message" role="status" aria-live="polite"></p>
+</section>
+{% endif %}

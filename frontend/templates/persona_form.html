@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Registrar persona | VoxTrace{% endblock %}
+{% block content %}
+<header class="page-header"><div><h1>Registrar persona</h1><p class="muted">Complete únicamente información autorizada y verificable.</p></div></header>
+<section class="panel form-panel"><form id="create-person-form" novalidate><div class="form-grid">
+  <div><label for="identificador">Identificador *</label><input id="identificador" name="identificador" required maxlength="50"></div>
+  <div><label for="nombre">Nombre *</label><input id="nombre" name="nombre" required maxlength="150"></div>
+  <div class="span-2"><label for="alias">Alias</label><input id="alias" name="alias" maxlength="100"></div>
+  <div class="span-2"><label for="descripcion">Descripción</label><textarea id="descripcion" name="descripcion"></textarea></div>
+  <div class="span-2"><label for="observaciones">Observaciones</label><textarea id="observaciones" name="observaciones"></textarea></div>
+  <div id="first-sample-field" class="span-2"><label for="first-sample">Primera muestra de voz (opcional)</label><input id="first-sample" name="file" type="file" accept=".mp3,.ogg,.mp4,.wav"><p class="muted">MP3, OGG, MP4 o WAV. Puede registrar la persona sin audio.</p></div>
+</div><div id="form-message" class="message" role="alert" aria-live="polite"></div><div class="form-actions"><a class="button button-ghost-light" href="/app/personas">Cancelar</a><button class="button button-primary" type="submit">Guardar persona</button></div></form></section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='/js/persona-form.js') }}"></script>{% endblock %}

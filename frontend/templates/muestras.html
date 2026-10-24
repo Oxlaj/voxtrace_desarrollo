@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Muestras de voz | VoxTrace{% endblock %}
+{% block content %}
+<header class="page-header"><div><p class="eyebrow">Referencia biométrica</p><h1>Muestras de voz</h1><p id="person-summary" class="muted">Cargando persona…</p><p class="muted">Formatos admitidos: WAV, MP3, OGG y MP4. La duración se registrará como parte de los metadatos de la muestra.</p></div><a class="button button-secondary" href="/app/personas">Volver a personas</a></header>
+{% if current_user.rol.nombre in ['Administrador', 'Investigador'] %}
+<section class="panel"><h2>Agregar muestra</h2><form id="sample-form"><label for="sample-file">Archivo de audio</label><input id="sample-file" name="file" type="file" accept=".wav,.mp3,.ogg,.mp4,audio/wav,audio/mpeg,audio/ogg,video/mp4" required><button class="button button-primary" type="submit">Procesar y registrar</button></form><div id="upload-message" class="message" role="status" aria-live="polite"></div></section>
+{% endif %}
+<section class="panel"><h2>Muestras registradas</h2><div id="samples-message" class="message" role="status" aria-live="polite"></div><div class="table-wrap"><table><thead><tr><th>Archivo original</th><th>Formato</th><th>Duración</th><th>Fecha de carga</th><th>Procesamiento</th></tr></thead><tbody id="samples-body"></tbody></table></div></section>
+<div id="samples-context" data-person-id="{{ persona_id }}" hidden></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='/js/muestras.js') }}"></script>{% endblock %}

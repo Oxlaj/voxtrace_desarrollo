@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Personas registradas | VoxTrace{% endblock %}
+{% block content %}
+<header class="page-header"><div><h1>Personas registradas</h1><p class="muted">Consulta y gestión según el rol de la sesión.</p></div>{% if current_user.rol.nombre in ['Administrador', 'Investigador'] %}<a class="button button-primary" href="/app/personas/nueva">Registrar persona</a>{% endif %}</header>
+<section class="panel">
+  <div class="toolbar"><label class="search-label" for="person-search">Buscar</label><input id="person-search" type="search" maxlength="100" placeholder="Nombre, identificador o alias"><button id="search-button" class="button button-secondary" type="button">Buscar</button></div>
+  <div id="persons-message" class="message" role="status" aria-live="polite"></div>
+  <div class="table-wrap"><table><thead><tr><th>Identificador</th><th>Nombre</th><th>Alias</th><th>Fecha de registro</th><th>Acciones</th></tr></thead><tbody id="persons-body"></tbody></table></div>
+</section>
+<dialog id="person-dialog"><form id="edit-person-form"><div class="dialog-header"><h2>Detalle de persona</h2><button type="button" id="close-dialog" class="icon-button" aria-label="Cerrar">×</button></div><input id="edit-id" type="hidden"><label for="edit-identificador">Identificador</label><input id="edit-identificador" required maxlength="50" {% if current_user.rol.nombre == 'Analista' %}readonly{% endif %}><label for="edit-nombre">Nombre</label><input id="edit-nombre" required maxlength="150" {% if current_user.rol.nombre == 'Analista' %}readonly{% endif %}><label for="edit-alias">Alias</label><input id="edit-alias" maxlength="100" {% if current_user.rol.nombre == 'Analista' %}readonly{% endif %}><label for="edit-descripcion">Descripción</label><textarea id="edit-descripcion" {% if current_user.rol.nombre == 'Analista' %}readonly{% endif %}></textarea><label for="edit-observaciones">Observaciones</label><textarea id="edit-observaciones" {% if current_user.rol.nombre == 'Analista' %}readonly{% endif %}></textarea><div id="dialog-message" class="message" role="alert"></div>{% if current_user.rol.nombre in ['Administrador', 'Investigador'] %}<div class="dialog-actions"><button class="button button-primary can-edit" type="submit">Guardar cambios</button>{% if current_user.rol.nombre == 'Administrador' %}<button class="button button-danger can-delete" id="delete-person" type="button">Eliminar</button>{% endif %}</div>{% endif %}</form></dialog>
+<div id="page-context" data-role="{{ current_user.rol.nombre }}" hidden></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='/js/personas.js') }}"></script>{% endblock %}

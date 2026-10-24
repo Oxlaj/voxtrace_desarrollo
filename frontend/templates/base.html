@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>{% block title %}VoxTrace{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/voxtrace.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/layout.css') }}">
+  {% block styles %}{% endblock %}
+</head>
+<body class="app-body">
+  <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-controls="primary-sidebar" aria-expanded="false" aria-label="Abrir menú principal">☰ <span>Menú</span></button>
+  <div class="sidebar-overlay" id="sidebar-overlay" hidden></div>
+  <div class="app-shell">
+    <aside class="sidebar" id="primary-sidebar">
+      <a class="brand" href="/dashboard"><span class="brand-mark">V</span><span>VoxTrace</span></a>
+      <nav aria-label="Navegación principal">
+        <a href="/dashboard" class="nav-link">Dashboard</a>
+        <a href="/app/personas" class="nav-link">Personas registradas</a>
+        <a href="/app/analizar" class="nav-link">Analizar audio</a>
+        <a href="/app/historial" class="nav-link">Historial de análisis</a>
+        <a href="/app/cambiar-password" class="nav-link">Cambiar contraseña</a>
+        {% if current_user.rol.nombre == 'Administrador' %}<a href="/app/usuarios" class="nav-link">Usuarios</a>{% endif %}
+        {% if current_user.rol.nombre == 'Administrador' %}<a href="/app/auditoria" class="nav-link">Auditoría</a>{% endif %}
+        {% if current_user.rol.nombre in ['Administrador', 'Investigador'] %}
+        <a href="/app/personas/nueva" class="nav-link">Registrar persona</a>
+        {% endif %}
+      </nav>
+      <div class="sidebar-user">
+        <span class="user-avatar">{{ current_user.nombre[:1] | upper }}</span>
+        <div><strong>{{ current_user.nombre }}</strong><small>{{ current_user.rol.nombre }}</small></div>
+      </div>
+      <button class="button button-ghost" id="logout-button" type="button">Cerrar sesión</button>
+    </aside>
+    <main class="main-content">{% block content %}{% endblock %}</main>
+  </div>
+  <script src="{{ url_for('static', path='/js/api.js') }}"></script>
+  <script src="{{ url_for('static', path='/js/app.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
